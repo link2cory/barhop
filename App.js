@@ -8,16 +8,21 @@ import { StyleSheet, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Constants from "expo-constants";
 
+import "react-native-gesture-handler";
+import { NavigationContainer } from "@react-navigation/native";
+
 import Main from "./src/components/Main";
 
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>
-        <View style={styles.container}>
-          <StatusBar style="auto" />
-          <Main />
-        </View>
+        <NavigationContainer>
+          <View style={styles.container}>
+            <StatusBar style="auto" />
+            <Main />
+          </View>
+        </NavigationContainer>
       </PersistGate>
     </Provider>
   );
