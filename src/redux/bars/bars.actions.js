@@ -1,11 +1,34 @@
-import { PLACES_BASE_URL, GOOGLE_API_KEY } from "../../../.env.config";
+import {
+  GOOGLE_API_BASE_URL,
+  PLACE_API,
+  NEARBY_SEARCH_ENDPOINT,
+  CONTENT_TYPE,
+  GOOGLE_API_KEY,
+} from "../../../.env.config";
 import { BarsActionTypes } from "./bars.types";
 
 export const searchForBars = () => async (dispatch) => {
   const longitude = "-122.4787";
   const latitude = "48.7519";
   const radius = 2000;
-  const request = `${PLACES_BASE_URL}nearbysearch/json?key=${GOOGLE_API_KEY}&location=${latitude},${longitude}&radius=${radius}&type=bar`;
+  const request =
+    GOOGLE_API_BASE_URL +
+    PLACE_API +
+    NEARBY_SEARCH_ENDPOINT +
+    CONTENT_TYPE +
+    "?" +
+    "key=" +
+    GOOGLE_API_KEY +
+    "&" +
+    "location=" +
+    latitude +
+    "," +
+    longitude +
+    "&" +
+    "radius=" +
+    radius +
+    "&" +
+    "type=bar";
 
   try {
     const response = await fetch(request);
