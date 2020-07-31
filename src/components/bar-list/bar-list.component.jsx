@@ -35,7 +35,7 @@ const BarList = () => {
       <ScrollView style={styles.container}>
         {bars.map((bar) => (
           <Card
-            key={bar.id}
+            key={bar.place_id}
             title={bar.name}
             image={{
               uri: request + `&photoreference=${bar.photos[0].photo_reference}`,
