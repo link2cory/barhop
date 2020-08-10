@@ -35,7 +35,7 @@ const Directions = ({ navigation, route }) => {
         />
         {bars.map((bar) => (
           <MapView.Marker
-            key={bar.id}
+            key={bar.place_id}
             coordinate={{
               latitude: bar.geometry.location.lat,
               longitude: bar.geometry.location.lng,
