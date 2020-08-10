@@ -1,7 +1,4 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/es/integration/react";
-import { store, persistor } from "./src/redux/store";
 
 import { StyleSheet, Text, View } from "react-native";
 
@@ -20,16 +17,12 @@ const { Navigator, Screen } = Stack;
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
-        <NavigationContainer>
-          <Navigator initialRouteName="Main">
-            <Screen name="Main" component={Main} />
-            <Screen name="Directions" component={Directions} />
-          </Navigator>
-        </NavigationContainer>
-      </PersistGate>
-    </Provider>
+    <NavigationContainer>
+      <Navigator initialRouteName="Main">
+        <Screen name="Main" component={Main} />
+        <Screen name="Directions" component={Directions} />
+      </Navigator>
+    </NavigationContainer>
   );
 }
 

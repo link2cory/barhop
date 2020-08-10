@@ -1,8 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { Card } from "react-native-elements";
-
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -11,9 +7,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { searchForBars } from "../../redux/bars/bars.actions";
-import { selectBarList } from "../../redux/bars/bars.selector";
+import { Card } from "react-native-elements";
 
+import useBars from "../../hooks/useBars";
 import {
   GOOGLE_API_BASE_URL,
   PLACE_API,
@@ -22,8 +18,6 @@ import {
 } from "../../../.env.config.js";
 
 const BarList = ({ onConfirm }) => {
-  const bars = useSelector(selectBarList);
-  const dispatch = useDispatch();
   const request =
     GOOGLE_API_BASE_URL +
     PLACE_API +
@@ -33,26 +27,32 @@ const BarList = ({ onConfirm }) => {
     "&" +
     "maxwidth=400";
 
-  useEffect(() => {
-    dispatch(searchForBars());
-  }, []);
+  const bars = useBars();
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.container}>
-        {bars.map((bar) => (
-          <TouchableOpacity key={bar.place_id} onPress={() => onConfirm([bar])}>
-            <Card
-              pointerEvents="none"
-              title={bar.name}
-              image={{
-                uri:
-                  request + `&photoreference=${bar.photos[0].photo_reference}`,
-              }}
-            ></Card>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
+      {!bars ? (
+        <Text>Fetching nearby Bars...</Text>
+      ) : (
+        <ScrollView style={styles.container}>
+          {bars.map((bar) => (
+            <TouchableOpacity
+              key={bar.place_id}
+              onPress={() => onConfirm([bar])}
+            >
+              <Card
+                pointerEvents="none"
+                title={bar.name}
+                image={{
+                  uri:
+                    request +
+                    `&photoreference=${bar.photos[0].photo_reference}`,
+                }}
+              ></Card>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 };
