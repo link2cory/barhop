@@ -33,6 +33,15 @@ const Directions = ({ navigation, route }) => {
           strokeWidth={10}
           strokeColor="green"
         />
+        {bars.map((bar) => (
+          <MapView.Marker
+            key={bar.id}
+            coordinate={{
+              latitude: bar.geometry.location.lat,
+              longitude: bar.geometry.location.lng,
+            }}
+          />
+        ))}
       </MapView>
     </View>
   );
