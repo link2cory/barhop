@@ -3,7 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Card } from "react-native-elements";
 
-import { ScrollView, StyleSheet, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 
 import { searchForBars } from "../../redux/bars/bars.actions";
 import { selectBarList } from "../../redux/bars/bars.selector";
@@ -15,7 +21,7 @@ import {
   GOOGLE_API_KEY,
 } from "../../../.env.config.js";
 
-const BarList = () => {
+const BarList = ({ onConfirm }) => {
   const bars = useSelector(selectBarList);
   const dispatch = useDispatch();
   const request =
@@ -26,6 +32,7 @@ const BarList = () => {
     GOOGLE_API_KEY +
     "&" +
     "maxwidth=400";
+
   useEffect(() => {
     dispatch(searchForBars());
   }, []);
@@ -34,13 +41,16 @@ const BarList = () => {
     <View style={styles.container}>
       <ScrollView style={styles.container}>
         {bars.map((bar) => (
-          <Card
-            key={bar.place_id}
-            title={bar.name}
-            image={{
-              uri: request + `&photoreference=${bar.photos[0].photo_reference}`,
-            }}
-          />
+          <TouchableOpacity key={bar.place_id} onPress={() => onConfirm([bar])}>
+            <Card
+              pointerEvents="none"
+              title={bar.name}
+              image={{
+                uri:
+                  request + `&photoreference=${bar.photos[0].photo_reference}`,
+              }}
+            ></Card>
+          </TouchableOpacity>
         ))}
       </ScrollView>
     </View>
